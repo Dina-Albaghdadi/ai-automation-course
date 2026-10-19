@@ -1,4 +1,7 @@
-# 🧩 Structured Output & JSON Schema
+#براء محمود ابو وطفة
+هبة الله حجازي 
+
+🧩 Structured Output & JSON Schema
 ## تنظيم مخرجات الذكاء الاصطناعي والتحقق من صلاحيتها
 
 ---
