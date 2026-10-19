@@ -1,135 +1,126 @@
-# Idempotency & Duplicate Prevention
-رنين أبو دلال و مها الزيناتي 
+رنين أبو دلال - مها الزيناتي 
 
-## 1. Overview
+# منع التكرار (Duplicate Prevention) وخاصية عدم تكرار أثر العملية (Idempotency)
+## 1. مقدمة
 
-**Idempotency** is a concept used in software systems to prevent the same operation from producing duplicate effects when a request is retried.
+في الأنظمة البرمجية، قد يحتاج النظام إلى إعادة إرسال الطلب عندما لا يحصل على استجابة واضحة من الخدمة التي يتعامل معها. لكن المشكلة أن الطلب الأول قد يكون نُفّذ بنجاح، حتى لو لم تصل الاستجابة إلى النظام.
 
-This is important when a system sends a request but does not receive a clear response. The operation may have succeeded even though the system does not know its result.
+إذا أعاد النظام إرسال الطلب دون آلية مناسبة لمنع التكرار، فقد يؤدي ذلك إلى إنشاء سجلات مكررة أو تنفيذ العملية نفسها أكثر من مرة.
 
-The goal is to make retries safer and reduce the risk of duplicate records or repeated actions.
+يهدف هذا البحث إلى فهم مفهوم **Idempotency**، وعلاقته بمنع التكرار **Duplicate Prevention**، وكيف يمكن الاستفادة منه في مشروع تسجيل العملاء باستخدام الوكيل وGoogle Sheets.
 
-## 2. What Is Idempotency?
+## 2. ما المقصود بـ Idempotency؟
 
-Idempotency means that performing the same operation multiple times produces the same final effect as performing it once.
+تعني خاصية **Idempotency** أن تنفيذ العملية نفسها عدة مرات يؤدي إلى النتيجة النهائية نفسها التي تنتج عن تنفيذها مرة واحدة، بدلًا من تكرار أثر العملية.
 
-For example, if a customer registration request is sent multiple times, the system should avoid creating multiple records for the same registration.
+على سبيل المثال، إذا أرسل الوكيل طلب تسجيل عميل وتم حفظ بياناته بنجاح، ثم أعاد إرسال الطلب نفسه بسبب مشكلة في الاتصال، فيجب أن تمنع آلية عدم التكرار إنشاء سجل إضافي للعملية نفسها.
 
-- First request: The customer is saved.
-- Second request: The system recognizes the repeated operation.
-- Third request: No additional duplicate record is created.
+- المحاولة الأولى: يتم حفظ بيانات العميل.
+- المحاولة الثانية: يتعرف النظام على أن العملية سبق تنفيذها.
+- المحاولة الثالثة: لا يتم إنشاء سجل مكرر آخر.
 
-**The key idea:** Retrying a request should not repeat its effect unnecessarily.
+**الفكرة الأساسية:** السماح بإعادة المحاولة دون تكرار أثر العملية.
 
-## 3. Why Can an Operation Be Repeated?
+## 3. ما المقصود بـ Duplicate Prevention؟
 
-A request may be repeated when the system does not receive a clear response from the service it contacted.
+يشير مصطلح **Duplicate Prevention** إلى منع إنشاء سجلات أو تنفيذ عمليات مكررة دون قصد.
 
-For example:
+في مشروع تسجيل العملاء، يعني ذلك تجنّب تسجيل العميل نفسه مرتين نتيجة إعادة إرسال طلب الحفظ أو حدوث مشكلة في الاتصال.
 
-1. The system sends a request to save customer data.
-2. The destination saves the data successfully.
-3. The response is lost because of a network problem.
-4. The system assumes the operation may have failed.
-5. The system retries the request.
-6. Without duplicate prevention, another record may be created.
+يمكن استخدام خاصية Idempotency كإحدى الطرق لتحقيق هذا الهدف، وذلك من خلال التعرف على الطلبات التي تمثل العملية نفسها.
 
-The main problem is that **a missing response does not necessarily mean that the operation failed**.
+من المهم التمييز بين المصطلحين:
 
-The system must distinguish between a failed operation and a successful operation whose response was not received.
+- **Duplicate Prevention:** الهدف العام، وهو منع التكرار.
+- **Idempotency:** خاصية في تصميم النظام تساعد على جعل إعادة الطلب نفسه لا تؤدي إلى تكرار أثره.
 
-## 4. What Is the Difference Between Retrying a Request and Creating a New Record?
+## 4. لماذا قد تتكرر العملية عند إعادة المحاولة؟
 
-Retrying a request means attempting to complete the same operation again.
+قد تحدث المشكلة عندما لا يحصل النظام على استجابة واضحة بعد إرسال الطلب.
 
-Creating a new record means adding another entry to the database or spreadsheet.
+على سبيل المثال:
 
-Without an appropriate mechanism, a retry may be treated as a new operation, resulting in duplicate records.
+1. يرسل الوكيل بيانات العميل إلى Google Sheets.
+2. يتم حفظ البيانات بنجاح.
+3. يحدث انقطاع في الاتصال قبل وصول استجابة تؤكد نجاح الحفظ.
+4. لا يعرف الوكيل ما إذا كانت العملية قد نجحت أم فشلت.
+5. يعيد الوكيل إرسال الطلب.
+6. إذا لم توجد آلية لمنع التكرار، فقد يُضاف صف آخر يحتوي على بيانات العميل نفسه.
 
-With an idempotency mechanism, the system can recognize a repeated request and avoid performing the same operation twice.
+إذن، **عدم وصول الاستجابة لا يعني بالضرورة أن عملية الحفظ قد فشلت**. فقد تكون العملية قد نجحت، لكن النظام لم يحصل على تأكيد بذلك.
 
-A genuinely new registration, however, should still be allowed.
+وهنا تظهر أهمية تصميم آلية تسمح بالتحقق من حالة العملية قبل إعادة تنفيذها.
 
-## 5. How Can a Unique Identifier Help?
+## 5. ما الفرق بين إعادة الطلب وإنشاء سجل جديد؟
 
-An **Idempotency Key** is a unique identifier associated with a particular operation.
+إعادة الطلب تعني محاولة تنفيذ العملية نفسها مرة أخرى، أما إنشاء سجل جديد فيعني إضافة بيانات جديدة إلى الجدول.
 
-The system generates the key before sending the request and reuses the same key when retrying that operation.
+لكن إذا لم يتضمن النظام آلية للتعرف على الطلبات المتكررة، فقد يتعامل مع إعادة المحاولة كما لو كانت عملية تسجيل جديدة.
 
-For example:
+| الحالة | بدون منع التكرار | مع آلية مناسبة |
+|---|---|---|
+| إعادة إرسال طلب التسجيل نفسه | قد يُنشأ صف مكرر | يتم التعرف على العملية السابقة |
+| إنشاء طلب تسجيل جديد | يُضاف سجل جديد | يُضاف سجل جديد |
+| انقطاع الاتصال بعد نجاح الحفظ | قد تتكرر البيانات | يمكن التحقق من نتيجة العملية السابقة |
 
-- First request: `REG-8F21`
-- Retry after a timeout: `REG-8F21`
-- Another retry: `REG-8F21`
+الهدف ليس منع جميع الطلبات الجديدة، بل التمييز بين العملية الجديدة وإعادة محاولة العملية نفسها.
 
-The system can use this identifier to determine whether the operation has already been processed.
+## 6. كيف يساعد المعرّف الفريد في اكتشاف التكرار؟
 
-If the operation has already succeeded, the system should avoid creating another record and can return or retrieve the previous result.
+يمكن استخدام معرّف فريد للعملية، يُعرف باسم **Idempotency Key**.
 
-A new registration should have a different operation identifier.
+وهو معرّف يرتبط بعملية تسجيل معينة، ويُعاد استخدامه عند إعادة إرسال الطلب نفسه.
 
-**Important:** A unique identifier alone is not enough. The system must store or track identifiers and check them reliably before creating records. Concurrent requests must also be handled to prevent duplicate writes.
+على سبيل المثال:
 
-## 6. Research Question
+- المحاولة الأولى: `REG-8F21`
+- المحاولة الثانية: `REG-8F21`
+- المحاولة الثالثة: `REG-8F21`
 
-**If the system does not know whether a data-saving operation succeeded and retries the request, how can it reduce the risk of creating a duplicate record?**
+إذا كان النظام يحتفظ بهذا المعرّف ويربطه بحالة العملية ونتيجتها، فيمكنه معرفة أن الطلبات الثلاثة تمثل عملية التسجيل نفسها.
 
-The system can reduce this risk by:
+إذا كانت العملية قد نُفّذت بنجاح، فلا ينبغي إنشاء سجل إضافي بسبب إعادة الطلب، ويمكن للنظام إرجاع النتيجة السابقة أو التحقق منها.
 
-1. Generating a unique identifier for the operation.
-2. Reusing the same identifier for every retry of that operation.
-3. Checking whether the operation has already been processed.
-4. Avoiding a second record when the same operation has already succeeded.
-5. Tracking operation status so that uncertain outcomes can be checked instead of automatically treated as failures.
-6. Handling simultaneous requests carefully to prevent duplicate records.
+أما عملية تسجيل جديدة، فيجب أن يكون لها معرّف مختلف.
 
-This approach makes retries safer without requiring the system to assume that every missing response means failure.
+**ملاحظة مهمة:** وجود المعرّف وحده لا يكفي؛ إذ يجب أن يتضمن التصميم آلية موثوقة لتخزين المعرّفات والتحقق منها، مع مراعاة الطلبات المتزامنة التي قد تصل في الوقت نفسه.
 
-## 7. Connection to the Project: Customer Registration in Google Sheets
+## 7. إجابة سؤال البحث
 
-Consider the following scenario:
+**السؤال:** إذا لم يعرف النظام هل نجحت عملية حفظ البيانات، ثم أعاد المحاولة، كيف يمكن تقليل احتمال إنشاء سجل مكرر؟
 
-1. A customer confirms their information.
-2. The agent sends a request to save the customer in Google Sheets.
-3. Google Sheets saves the data, but the agent does not receive a clear response.
-4. The agent retries the request.
-5. The same customer may be registered twice if duplicate prevention is not implemented.
+يمكن تقليل احتمال التكرار من خلال الخطوات التالية:
 
-### Possible Solution
+1. إنشاء معرّف فريد لعملية التسجيل قبل إرسال طلب الحفظ.
+2. الاحتفاظ بالمعرّف نفسه عند إعادة إرسال الطلب، بدلًا من إنشاء معرّف جديد لكل محاولة.
+3. التحقق مما إذا كانت العملية نفسها قد نُفّذت سابقًا.
+4. تجنّب إنشاء سجل جديد إذا ثبت أن العملية السابقة نجحت.
+5. تتبّع حالة العملية ونتيجتها، حتى يتمكن النظام من التعامل مع الحالات التي تكون فيها نتيجة الحفظ غير معروفة.
+6. تصميم آلية تراعي الطلبات المتزامنة، حتى لا تؤدي محاولتان متقاربتان إلى إنشاء سجلين للعملية نفسها.
 
-A possible design would work as follows:
+بهذه الطريقة، يمكن جعل إعادة المحاولة أكثر أمانًا وتقليل احتمال إنشاء بيانات مكررة.
 
-1. Generate a unique identifier for the customer registration operation.
-2. Send the identifier along with the customer data.
-3. If the request must be retried, reuse the same identifier.
-4. Check whether that registration operation has already been saved.
-5. If it has already succeeded, do not add another row.
-6. If it has not been saved, proceed with the registration while ensuring that concurrent requests cannot create duplicate records.
+## 8. ربط المفهوم بالمشروع
 
-This is a proposed design for understanding the problem. It is not an implementation of duplicate prevention.
+### سيناريو تسجيل العميل في Google Sheets
 
-### Important Consideration for Google Sheets
+في المشروع، يؤكد العميل بياناته، ثم يرسل الوكيل طلبًا لحفظها في Google Sheets.
 
-Google Sheets does not automatically guarantee idempotency just because a request includes a unique identifier.
+قد يحدث التسلسل التالي:
 
-For example, checking whether an identifier exists and then appending a row can still cause duplicates if two requests perform the check at the same time.
+1. يؤكد العميل بياناته.
+2. يرسل الوكيل طلب الحفظ.
+3. يحفظ Google Sheets البيانات بنجاح.
+4. لا يحصل الوكيل على استجابة واضحة بسبب مشكلة في الاتصال.
+5. يعيد الوكيل إرسال الطلب نفسه.
+6. قد يتم تسجيل العميل مرتين إذا لم توجد آلية مناسبة لمنع التكرار.
 
-A reliable solution must account for operation tracking, retries, and concurrent requests.
+### الحل الممكن من ناحية التصميم
 
-## 8. Conclusion
+يمكن تصور آلية تساعد على منع هذه المشكلة كما يلي:
 
-Idempotency is an important concept for building reliable systems that may need to retry requests.
-
-The main lesson is that a repeated request should not automatically create a new record. By using a stable operation identifier and a reliable duplicate-checking mechanism, a system can reduce the risk of duplicate customer registrations when the result of a previous request is uncertain.
-
-In this project, the concept helps explain how an agent could safely retry a request to save customer information in Google Sheets without registering the same operation twice.
-
-## 9. Reference
-
-- [Stripe — Idempotent Requests](https://docs.stripe.com/api/idempotent_requests)
-
-This official Stripe documentation explains how idempotency keys can help make request retries safe and prevent repeated operations.
-
-## Scope of This Research
-
-This document focuses on understanding the problem, the underlying concept, and a possible solution design. **No implementation of the duplicate-prevention mechanism is included.**
+1. إنشاء معرّف فريد لعملية تسجيل العميل.
+2. إرسال بيانات العميل مع هذا المعرّف.
+3. إعادة استخدام المعرّف نفسه عند إعادة المحاولة.
+4. التحقق من حالة عملية التسجيل السابقة.
+5. إذا ثبت
