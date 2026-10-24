@@ -1,6 +1,6 @@
 # مها الزيناتي & رنين أبو دلال
 
-# 📘 ملخص: Business Process Analysis & Automation Opportunity Mapping
+# 📘  Business Process Analysis & Automation Opportunity Mapping
 
 ## 1. 🔍 تحليل العملية الحالية (As-Is Process)
 
