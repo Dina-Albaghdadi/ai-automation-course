@@ -720,3 +720,4 @@
 `Understand → Analyze → Decide → Design → Build → Test → Improve → Deliver`
 
 **The goal is not to use more AI. The goal is to engineer the right solution.**
+
