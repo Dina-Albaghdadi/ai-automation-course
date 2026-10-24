@@ -1,171 +1,235 @@
-# 🔐 AI Security, Risk & Controlled Autonomy
-## 🛡️ أمن الذكاء الاصطناعي وإدارة المخاطر والتحكم في الاستقلالية
+# 🔐 أمن الذكاء الاصطناعي وإدارة المخاطر والتحكم في الاستقلالية
+## AI Security, Risk & Controlled Autonomy
 
----
+### 📌 1. نظرة عامة على المشروع
 
-## 📌 1. Project Overview
+يتناول هذا العرض أهمية حماية أنظمة الذكاء الاصطناعي من المخاطر الأمنية، وكيفية التحكم في صلاحياتها ومستوى استقلاليتها.
 
-This section focuses on securing AI Agents by controlling their permissions, protecting sensitive data, monitoring system actions, and managing potential risks.
+يركز الجزء الثاني من العرض على وسائل الحماية، والتحكم في الوصول إلى البيانات والأنظمة، وتسجيل الأنشطة، وتقييم المخاطر، وتحديد متى يجب أن يتدخل الإنسان أو يوافق على تنفيذ الإجراءات.
 
-The goal is to allow AI Agents to work autonomously while keeping their actions safe, controlled, and authorized.
+### 🎯 2. أهداف العرض
 
-يركّز هذا الجزء على حماية وكلاء الذكاء الاصطناعي من خلال تحديد الصلاحيات، وحماية البيانات الحساسة، ومراقبة العمليات، وإدارة المخاطر المحتملة.
+- 🔒 التعرف على أهم وسائل حماية أنظمة الذكاء الاصطناعي.
+- 🛡️ فهم أهمية التحكم في الصلاحيات ومنح النظام أقل قدر ممكن من الوصول.
+- 📝 التعرف على سجلات التدقيق وأهميتها في تتبع الأنشطة.
+- 👤 التمييز بين الإشراف البشري والموافقة البشرية.
+- ⚠️ فهم كيفية تقييم المخاطر واختيار إجراءات التخفيف المناسبة.
+- ⚖️ تحديد الصلاحيات المناسبة للذكاء الاصطناعي حسب مستوى المخاطر.
 
----
+### 🔑 3. أهم المفاهيم الأمنية
 
-## 🎯 2. Learning Objectives
+#### 🧩 أ. حقن الأوامر (Prompt Injection)
 
-By the end of this section, we aim to understand how to:
+هو محاولة للتلاعب بتعليمات الذكاء الاصطناعي من خلال إدخال أوامر مضللة بهدف دفع النظام إلى تنفيذ سلوك غير مرغوب فيه أو تجاوز التعليمات المحددة له.
 
-- 🔑 Apply the **Least Privilege** principle.
-- 🔒 Control access to tools and data.
-- 📝 Use Audit Logs to track important operations.
-- 👤 Understand Human-in-the-Loop and Human Approval.
-- ⚠️ Assess risks based on likelihood and impact.
-- 📊 Build an AI Risk & Permission Matrix.
-- 🛡️ Distinguish model instructions from system-enforced security controls.
+**مثال:** إرسال نص داخل ملف يطلب من النظام تجاهل تعليماته الأساسية وكشف معلومات سرية.
 
----
+**وسائل الحماية:**
+- التحقق من المدخلات.
+- التعامل مع الملفات والمحتوى الخارجي باعتبارها مصادر غير موثوقة.
+- عدم الاعتماد على تعليمات النموذج وحدها كوسيلة للحماية.
 
-## 🧩 3. Key Topics
+#### 🔐 ب. كشف المعلومات الحساسة (Sensitive Information Disclosure)
 
-### ⚠️ 3.1 AI Security Risks
+يحدث عندما يكشف النظام معلومات خاصة أو سرية لأشخاص غير مخولين بالوصول إليها.
 
-- **Prompt Injection:** Malicious instructions that attempt to manipulate an AI model or override its intended behavior.
-- **Sensitive Information Disclosure:** Unauthorized exposure of private or confidential information.
-- **Excessive Agency:** Giving an AI Agent more permissions or autonomy than necessary.
+**مثال:** أن يعرض النظام بيانات مالية تخص شركة لمستخدم لا يملك صلاحية الاطلاع عليها.
 
-### 🔑 3.2 Least Privilege
+**وسائل الحماية:**
+- حماية البيانات الحساسة.
+- تطبيق صلاحيات الوصول المناسبة.
+- تجنب إرسال المعلومات السرية إلى خدمات غير معتمدة.
+- التحقق من هوية المستخدم وصلاحياته قبل عرض البيانات.
 
-The Least Privilege principle means giving an AI Agent only the minimum permissions required to perform its assigned tasks.
+#### 🤖 ج. الصلاحيات المفرطة (Excessive Agency)
 
-It applies to:
+تحدث عندما يمتلك نظام الذكاء الاصطناعي صلاحيات أوسع من احتياجاته الفعلية، مما قد يسمح له بتنفيذ إجراءات خطيرة أو غير مقصودة.
 
-- 🧰 Tools the agent can use.
-- 📂 Data the agent can access.
-- 🔐 Actions the agent can perform.
+**مثال:** منح وكيل ذكاء اصطناعي صلاحية حذف جميع سجلات النظام، بينما يحتاج فقط إلى قراءة البيانات وإعداد التقارير.
 
-### 🧠 3.3 System Prompt vs. Security Controls
+**وسائل الحماية:**
+- منح أقل قدر ممكن من الصلاحيات.
+- تحديد الإجراءات المسموح بها مسبقًا.
+- طلب موافقة بشرية قبل تنفيذ الإجراءات الحساسة.
 
-A System Prompt provides instructions that guide the AI model's behavior, but it is not a complete security boundary.
+### 🛡️ 4. مبدأ أقل قدر من الصلاحيات (Least Privilege)
 
-Effective security requires system-enforced controls, such as permission checks, access restrictions, and validation before sensitive actions.
+يعني منح المستخدم أو النظام أو وكيل الذكاء الاصطناعي الصلاحيات الضرورية فقط لأداء المهمة المطلوبة، دون صلاحيات إضافية.
 
-**Key principle:** Security must be enforced by the system, not by relying on AI instructions alone.
+**مثال عملي:**
 
-### 👤 3.4 Human Oversight
+إذا كان دور الذكاء الاصطناعي هو إعداد تقرير مالي، فيمكن منحه صلاحية قراءة البيانات المالية وإنشاء التقرير، دون منحه صلاحية حذف السجلات أو تحويل الأموال.
 
-- **Human-in-the-Loop:** A human participates in reviewing outputs or making decisions.
-- **Human Approval:** A specific action requires explicit approval from an authorized person before execution.
+**أهمية هذا المبدأ:**
+- تقليل الأضرار الناتجة عن الأخطاء.
+- الحد من الوصول غير المصرح به.
+- تقليل تأثير الاختراقات الأمنية.
+- تحسين التحكم في سلوك النظام.
 
-Low-risk tasks may run automatically, while sensitive or high-impact actions may require additional review or approval.
+### ⚙️ 5. الفرق بين تعليمات النظام وضوابط الأمان
 
-### 🔒 3.5 Access Control
+| العنصر | تعليمات النظام (System Prompt) | ضوابط الأمان (Security Controls) |
+|---|---|---|
+| الوظيفة | توجيه سلوك النموذج | فرض قيود وحماية على النظام |
+| طريقة العمل | تعتمد على التعليمات التي يتلقاها النموذج | قد تعتمد على الصلاحيات والتحقق البرمجي والسياسات |
+| مثال | «لا تحذف أي بيانات» | منع عملية الحذف تقنيًا ما لم تتوفر الصلاحية والموافقة المطلوبة |
+| مستوى الحماية | لا تكفي وحدها لضمان الأمان | توفر حماية إضافية عند تطبيقها بشكل صحيح |
 
-Access Control determines who can access information and which operations they are allowed to perform.
+**💡 الفكرة الأساسية:** لا يكفي أن نطلب من الذكاء الاصطناعي ألا ينفذ إجراءً خطيرًا، بل يجب أن تكون هناك ضوابط تقنية تمنعه من تنفيذه دون الصلاحيات المطلوبة.
 
-Possible permissions include:
+### 👤 6. الإشراف البشري والموافقة البشرية
 
-- 👁️ Read
-- ✏️ Edit
-- 🗑️ Delete
+#### 👀 أ. الإنسان ضمن حلقة العمل (Human-in-the-Loop)
 
-The system should enforce these permissions to prevent unauthorized access or changes.
+يعني مشاركة الإنسان في مراحل العمل، مثل مراجعة النتائج أو تقديم التوجيه أو اتخاذ بعض القرارات أثناء تنفيذ المهمة.
 
-### 📝 3.6 Audit Logs
+**مثال:** يراجع الموظف تقريرًا أعده الذكاء الاصطناعي ويصحح الأخطاء قبل استخدامه.
 
-Audit Logs record important system activities to support monitoring, troubleshooting, and security reviews.
+#### ✅ ب. الموافقة البشرية (Human Approval)
 
-Useful log fields may include:
+تعني اشتراط الحصول على موافقة صريحة من شخص مخول قبل تنفيذ إجراء معين.
 
-- ⚙️ Action performed
-- 🕒 Timestamp
-- ✅ Operation result
-- 👤 Authorized user or initiating process
+**مثال:** يستطيع الذكاء الاصطناعي تجهيز أمر تحويل مالي، لكنه لا ينفذه قبل موافقة المسؤول.
 
-Sensitive information, passwords, and secrets should not be logged unnecessarily.
+#### 📊 الفرق بينهما
 
----
+| المقارنة | الإشراف البشري | الموافقة البشرية |
+|---|---|---|
+| الهدف | متابعة العمل ومراجعته وتوجيهه | السماح بتنفيذ إجراء محدد |
+| التوقيت | قد يحدث في مراحل متعددة | يحدث قبل الإجراء الذي يتطلب الموافقة |
+| مثال | مراجعة تقرير الذكاء الاصطناعي | الموافقة على إرسال دفعة مالية |
 
-## 📊 4. Risk Assessment
+### 🔑 7. التحكم في الوصول (Access Control)
 
-Risk assessment helps determine which risks require the most attention and which safeguards should be applied.
+هو تحديد من يستطيع الوصول إلى البيانات أو الأنظمة، وما الإجراءات التي يمكنه تنفيذها.
 
-### 🔍 Main Factors
+**مثال:** في نظام محاسبي، يستطيع المحاسب عرض الفواتير وإدخالها، بينما تحتاج عملية اعتماد دفعة مالية إلى صلاحية إضافية.
 
-- **Likelihood:** How likely the risk is to occur.
-- **Impact:** How serious the consequences could be.
-- **Mitigation Effectiveness:** How effectively security controls reduce the risk.
+**أهم الإجراءات:**
+- 👤 التحقق من هوية المستخدم.
+- 🔐 تحديد الصلاحيات حسب الدور.
+- 🚫 منع الوصول غير المصرح به.
+- 🔄 مراجعة الصلاحيات وتحديثها عند الحاجة.
+- 🧱 تطبيق ضوابط الوصول داخل النظام، وليس الاعتماد على واجهة المستخدم فقط.
 
-### 🧮 Risk Score
+### 📝 8. سجلات التدقيق (Audit Logs)
 
-A simple initial risk score can be calculated using:
+هي سجلات توثق الأنشطة المهمة التي تحدث داخل النظام، وتساعد على معرفة ما حدث ومتى حدث ومن نفّذه.
 
-`Risk Score = Likelihood × Impact`
+**يمكن أن تتضمن:**
+- هوية المستخدم أو النظام الذي نفّذ الإجراء.
+- نوع العملية المنفذة.
+- وقت تنفيذ العملية.
+- نتيجة العملية، سواء نجحت أو فشلت.
+- حالة الموافقة على الإجراءات الحساسة.
 
-A higher score generally indicates that stronger controls or further investigation may be needed.
+**مثال:** سجل يوضح أن وكيل الذكاء الاصطناعي جهّز تقريرًا في الساعة العاشرة صباحًا، وأن المسؤول وافق على إرساله.
 
-The score is a prioritization aid, not a complete risk assessment. The effectiveness of safeguards and the remaining risk should also be reviewed.
+**أهمية سجلات التدقيق:**
+- 🔍 تتبع الأنشطة والتحقيق في الحوادث.
+- 🛡️ اكتشاف الأنشطة غير المعتادة.
+- 📊 دعم المراجعة والمساءلة.
+- 🧾 توفير دليل على الإجراءات التي نُفذت.
 
----
+**ملاحظة أمنية:** يجب حماية السجلات من التعديل غير المصرح به، وتجنب تخزين كلمات المرور أو المعلومات الحساسة غير الضرورية داخلها.
 
-## 📋 5. AI Risk & Permission Matrix
+### ⚠️ 9. تقييم المخاطر (Risk Assessment)
 
-The AI Risk & Permission Matrix organizes potential risks, their possible impact, and the controls required to manage them.
+تقييم المخاطر هو عملية تساعدنا على تحديد المشكلات الأمنية المحتملة، وفهم مدى خطورتها، واختيار الإجراءات المناسبة للحد منها.
 
-| ⚠️ Risk | 🛡️ Suggested Security Control |
-|---|---|
-| Prompt Injection | Validate inputs, treat external content as untrusted, and restrict tool access |
-| Sensitive Information Disclosure | Enforce access control and limit access to necessary data |
-| Unauthorized Changes | Validate permissions and record important operations |
-| Sensitive or Irreversible Actions | Require review or explicit human approval when appropriate |
+#### 📌 العناصر الأساسية لتقييم المخاطر
 
-### 🤖 Automation Decision
+**1. احتمالية الحدوث (Likelihood)**
 
-System actions should be classified into three categories:
+ما مدى احتمال وقوع المشكلة؟
 
-- 🟢 **Automatic:** Low-risk actions that are within the agent's authorized permissions.
-- 🟡 **Review or Approval Required:** Sensitive or high-impact actions that need additional checks.
-- 🔴 **Prohibited:** Actions that are unauthorized or violate security rules.
+- منخفضة: احتمال حدوثها قليل.
+- متوسطة: قد تحدث في ظروف معينة.
+- مرتفعة: احتمال حدوثها كبير.
 
----
+**2. التأثير (Impact)**
 
-## 🛠️ 6. Security Best Practices
+ما حجم الضرر الذي قد ينتج عن المشكلة؟
 
-- 🔑 Apply the Least Privilege principle.
-- 🔒 Enforce access control at the system level.
-- 🧪 Validate inputs and restrict available tools.
-- 👤 Require human approval when the risk justifies it.
-- 📝 Maintain audit logs for important operations.
-- 🔍 Review security controls and remaining risks regularly.
-- 🚫 Never rely on the System Prompt as the only security measure.
+- منخفض: ضرر محدود.
+- متوسط: يؤثر في جزء من العمل.
+- مرتفع: قد يؤدي إلى خسائر كبيرة أو كشف بيانات حساسة.
 
----
+**3. فعالية إجراءات التخفيف (Mitigation Effectiveness)**
 
-## 💡 7. Key Takeaway
+إلى أي مدى تساعد الإجراءات الأمنية في تقليل احتمال وقوع المشكلة أو الحد من تأثيرها؟
 
-AI Agents should be allowed to act autonomously only within clearly defined security boundaries.
+**مثال:** اشتراط موافقة المسؤول قبل تنفيذ تحويل مالي يقلل من خطر تنفيذ تحويل غير مصرح به، بشرط تطبيق الموافقة والتحقق منها فعليًا.
 
-Effective protection combines limited permissions, system-enforced controls, access management, audit logs, risk assessment, and human oversight when necessary.
+#### 🧮 حساب مستوى المخاطر
 
-**The goal is controlled autonomy: enabling AI to work efficiently without compromising data security or system integrity.**
+يمكن استخدام نموذج مبسط لتقدير المخاطر:
 
----
+**درجة المخاطر = احتمالية الحدوث × التأثير**
 
-## 🎨 8. Presentation Design
+إذا كانت الدرجات من 1 إلى 5:
 
-- 🌑 **Background:** Dark Navy `#0B1020`
-- 🔵 **Primary Color:** Blue `#2563EB`
-- 🩵 **Accent Color:** Cyan `#22D3EE`
-- ⚪ **Text:** White and Light Gray
-- 🖋️ **Suggested Fonts:** Cairo or Tajawal for Arabic, Inter for English
+- الاحتمالية = 4
+- التأثير = 5
 
-Keep slides concise, use clear headings, and support the explanation with simple visual elements.
+إذن:
 
----
+**درجة المخاطر = 4 × 5 = 20**
 
-## ✅ Conclusion
+تشير الدرجة المرتفعة إلى ضرورة إعطاء الخطر أولوية أكبر في المعالجة.
 
-AI security is not achieved through instructions alone. It requires clear permissions, effective technical controls, monitoring, and appropriate human oversight.
+*ملاحظة: هذا نموذج مبسط، ويجب تحديد حدود الدرجات ومستويات الخطورة وفقًا لسياسة المؤسسة. كما ينبغي تقييم فعالية إجراءات التخفيف بصورة منفصلة عند الحاجة.*
 
-By assessing risks and applying the right safeguards, AI Agents can perform tasks autonomously while remaining secure, controlled, and accountable.
+### ⚖️ 10. مصفوفة مخاطر الذكاء الاصطناعي والصلاحيات
+
+تساعد هذه المصفوفة على تحديد ما يمكن للذكاء الاصطناعي تنفيذه تلقائيًا، وما يحتاج إلى مراجعة أو موافقة بشرية.
+
+| الإجراء | مستوى المخاطر | الصلاحية أو الإجراء المناسب |
+|---|---|---|
+| تلخيص مستند عام | منخفض | يمكن تنفيذه تلقائيًا |
+| تصنيف الفواتير | منخفض إلى متوسط | تنفيذ تلقائي مع مراجعة دورية |
+| تعديل بيانات مالية | مرتفع | تحقق إضافي وموافقة حسب السياسة |
+| إرسال تقرير يحتوي على معلومات حساسة | مرتفع | التحقق من المستلم والحصول على الموافقة عند الحاجة |
+| حذف سجلات مهمة | مرتفع جدًا | تقييد الصلاحية واشتراط موافقة صريحة وضوابط إضافية |
+
+**💡 مبدأ مهم:** كلما ارتفعت خطورة الإجراء، زادت الحاجة إلى ضوابط أقوى ومراجعة بشرية مناسبة.
+
+### ✅ 11. أفضل الممارسات الأمنية
+
+- 🔐 تطبيق مبدأ أقل قدر من الصلاحيات.
+- 👤 التحقق من هوية المستخدم قبل السماح بالوصول.
+- 🧱 استخدام ضوابط تقنية تمنع الإجراءات غير المصرح بها.
+- 📝 تسجيل العمليات المهمة في سجلات التدقيق.
+- ⚠️ تقييم المخاطر قبل منح الذكاء الاصطناعي صلاحيات جديدة.
+- ✅ طلب موافقة بشرية على الإجراءات الحساسة.
+- 🔍 اختبار النظام بانتظام واكتشاف نقاط الضعف.
+- 🔒 حماية البيانات والسجلات من الوصول أو التعديل غير المصرح به.
+- 📌 تحديد حدود واضحة لما يستطيع النظام تنفيذه بشكل مستقل.
+
+### 🌟 12. الخلاصة
+
+الذكاء الاصطناعي يمكن أن يساعدنا على إنجاز المهام بسرعة وكفاءة، لكن استخدامه في الأنظمة الحقيقية يحتاج إلى حماية وتحكم واضحين.
+
+لذلك، يجب ألا نعتمد على تعليمات النموذج وحدها، بل نستخدم صلاحيات محددة، وضوابط أمنية، وسجلات تدقيق، وتقييمًا للمخاطر، وموافقة بشرية عند الحاجة.
+
+**الرسالة الأساسية:**
+
+🔐 **الذكاء الاصطناعي الآمن ليس فقط نظامًا يعطي إجابات جيدة، بل نظام يعمل ضمن صلاحيات واضحة، ويمكن مراقبته ومراجعة قراراته والتحكم في إجراءاته.**
+
+### 🎨 13. تصميم العرض التقديمي
+
+- 🌑 **الخلفية:** كحلي داكن.
+- 🔵 **اللون الأساسي:** أزرق.
+- 🩵 **لون التمييز:** سماوي.
+- ⚪ **النصوص:** أبيض أو رمادي فاتح.
+- 🔤 **الخط المقترح:** Cairo أو Tajawal.
+- 📊 **أسلوب التصميم:** بسيط، واضح، مع أمثلة عملية وجداول مختصرة.
+- 🛡️ **العناصر البصرية:** أيقونات الأمن، الأقفال، المستخدمين، المخاطر، وسجلات الأنشطة.
+
+### 🏁 14. خاتمة العرض
+
+في النهاية، حماية أنظمة الذكاء الاصطناعي لا تعني منعها من العمل، بل تعني تمكينها من أداء المهام المفيدة مع تقليل المخاطر.
+
+نمنح النظام الصلاحيات التي يحتاجها فقط، ونراقب أنشطته، ونقيّم مخاطره، ونحتفظ بالتحكم البشري في القرارات الحساسة.
+
+بهذه الطريقة، نستفيد من الذكاء الاصطناعي مع الحفاظ على الأمان والمسؤولية والثقة.
