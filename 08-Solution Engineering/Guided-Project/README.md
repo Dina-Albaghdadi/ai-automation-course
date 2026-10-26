@@ -1,354 +1,147 @@
-# 🚀 U8 Final Team Challenge
-## Build, Deploy & Deliver an AI Automation Solution
+# U8 — BUILD, DEPLOY & DELIVER
 
-### 🎯 Challenge Mission
+## Final Team Challenge — AI Automation Solution
 
-في هذا التحدي، لن نعطيكم مشكلة جاهزة ولا Workflow جاهزًا.
+> Don't just build an automation. Build a solution that someone can actually use.
 
-كل فريق سيختار **مشكلة حقيقية** من مجال يهمه، ثم يحولها إلى **AI Automation Solution** باستخدام n8n.
+In this unit, I apply what I have learned about process analysis, system design, and AI automation to transform a real-world problem into a practical solution using n8n.
 
-الهدف ليس بناء أكبر Workflow.
-
-الهدف هو إثبات أنكم تستطيعون:
-
-> **Understand the Problem → Design the Solution → Build It → Test It → Deploy It → Explain It → Deliver It**
+The goal is not to build the most complex workflow. It is to design the right solution, implement and test it, and prepare it for deployment and handover.
 
 ---
 
-# 1. Choose a Real Problem
+## 🎯 Capability
 
-اختاروا مشكلة يمكن حل جزء واضح منها باستخدام Automation.
+**AI Automation Solution Building**
 
-يمكن أن تكون المشكلة في:
-
-- Business
-- Education
-- Healthcare
-- E-commerce
-- Recruitment
-- Customer Support
-- Marketing
-- Sales
-- Finance
-- Operations
-- Content
-- Real Estate
-- أو أي مجال آخر.
-
-### السؤال الأساسي:
-
-> **What repetitive or time-consuming problem can we automate?**
-
-لا تبدأوا بالأداة.
-
-ابدأوا بالمشكلة.
+The ability to transform a real-world problem into a complete automation solution by understanding the problem, designing the appropriate architecture, building and testing the workflow, and preparing a deployment and handover plan.
 
 ---
 
-# 2. Define the Solution
+## 🧠 What I Learned
 
-قبل بناء الـ Workflow، حددوا:
+Throughout this unit, I develop my ability to:
 
-### Problem
-ما المشكلة؟
-
-### Target User
-من سيستخدم الحل؟
-
-### Current Process
-كيف يتم تنفيذ المهمة حاليًا؟
-
-### Automation Opportunity
-أي جزء يمكن أتمتته؟
-
-### Expected Outcome
-ما النتيجة التي سيحصل عليها المستخدم؟
+- **Understand the Problem:** Identify the real problem, target users, and expected outcomes.
+- **Design the Solution:** Analyze the current process and identify opportunities for automation.
+- **Choose the Right Architecture:** Select the appropriate approach, whether Automation Workflow, AI-Powered Workflow, AI Assistant, AI Agent, or RAG.
+- **Build the Workflow:** Design and implement an n8n workflow from input to processing, action, and output.
+- **Ensure Reliability:** Validate inputs, handle errors, and maintain a clear data flow.
+- **Test the Solution:** Test normal scenarios, edge cases, and failure cases, then document the results.
+- **Plan Deployment:** Identify hosting, security, data storage, and maintenance requirements.
+- **Prepare the Handover:** Document the solution and provide setup, operation, and testing instructions.
 
 ---
 
-# 3. Choose the Right AI Architecture
+## 🛠️ Projects
 
-قرروا ما نوع الحل المناسب:
+### 01 — Final Team Challenge
 
-### Option A — Automation Workflow
-إذا كانت القواعد واضحة ولا تحتاج إلى AI.
+**Project:** AI Automation Solution
 
-### Option B — AI-Powered Workflow
-إذا كان الـ Workflow يحتاج إلى AI لفهم أو تصنيف أو توليد معلومات.
+A team project focused on selecting a real-world problem and building a practical automation solution using n8n. The project includes solution design, implementation, testing, documentation, and deployment planning.
 
-### Option C — AI Assistant
-إذا كان المستخدم يحتاج إلى التفاعل مع النظام للحصول على المساعدة.
+- **Problem:** A repetitive or time-consuming task with a clear opportunity for automation.
+- **Solution:** A practical solution using automation, AI, or an appropriate combination of technologies.
+- **Tools:** n8n and any additional tools or services required by the solution.
+- **Deliverables:** n8n Workflow, Problem & Solution Description, Architecture Diagram, Testing Evidence, Reliability Notes, Deployment Plan, and Handover Documentation.
 
-### Option D — AI Agent
-إذا كان النظام يحتاج إلى اتخاذ قرارات واستخدام Tools لتحقيق هدف.
-
-### Option E — RAG
-إذا كان الحل يحتاج إلى الإجابة اعتمادًا على Knowledge Base محددة.
-
-> **Do not use an Agent when a Workflow is enough.**
-
-اختيار الـ Architecture جزء من تقييم المشروع.
+[Explore the Project](./08-build-deploy-deliver/final-team-challenge)
 
 ---
 
-# 4. Build the Automation in n8n
+## 🔍 Engineering Focus
 
-يجب أن يحتوي الحل على الأقل على:
+Throughout this unit, I focus on the following questions:
 
-### 1. Trigger
-كيف يبدأ الـ Workflow؟
-
-Examples:
-- Webhook
-- Form
-- Schedule
-- Telegram
-- Email
-- App Event
-
-### 2. Input
-ما البيانات التي يستقبلها النظام؟
-
-### 3. Processing
-ماذا يحدث للبيانات؟
-
-يمكن أن يتضمن:
-- Logic
-- Data Transformation
-- Validation
-- AI
-- RAG
-- Agent
-- APIs
-
-### 4. Action
-ما الإجراء الذي ينفذه النظام؟
-
-Examples:
-- Send Email
-- Update Database
-- Create Record
-- Send Telegram Message
-- Generate Report
-- Call an API
-
-### 5. Output
-ما النتيجة النهائية للمستخدم؟
+1. What real problem are we solving, and who is the target user?
+2. How is the process currently performed, and which parts should be automated?
+3. Why is the chosen architecture appropriate? Do we actually need AI or an Agent?
+4. How does data flow from the trigger through processing to the final action and output?
+5. How does the system handle missing inputs, errors, and service failures?
+6. How can we test the solution and verify that it works correctly?
+7. Where will the solution run, and what are its security and maintenance requirements?
+8. How can another person set up, operate, test, and maintain the solution after handover?
 
 ---
 
-# 5. Make It Reliable
+## ⚙️ Solution Architecture
 
-لا يكفي أن يعمل الـ Workflow مرة واحدة.
+The solution follows these core stages, depending on the selected problem:
 
-أضيفوا على الأقل:
-
-- Input Validation
-- Basic Error Handling
-- Clear Data Flow
-- Meaningful Node Names
-- Test Data
-- Successful Test Run
-
-واسألوا:
-
-> **What happens if something goes wrong?**
+1. **Trigger:** Define the event that starts the workflow.
+2. **Input:** Receive the required data.
+3. **Processing:** Validate and transform data, then apply the appropriate logic using AI, RAG, or an Agent when necessary.
+4. **Action:** Perform the required action, such as sending a message, updating a database, or generating a report.
+5. **Output:** Deliver the final result to the user.
+6. **Reliability & Testing:** Validate inputs, handle errors, and test different scenarios.
+7. **Deployment & Handover:** Prepare the operating plan, documentation, and handover materials.
 
 ---
 
-# 6. Test Your Solution
+## 🧪 Testing & Reliability
 
-اختبروا الحل باستخدام أكثر من حالة.
+I learn that a workflow must be tested under different conditions rather than being considered successful after a single run.
 
-يجب أن يكون لديكم على الأقل:
-
-### Happy Path
-المدخلات صحيحة → النظام يعمل بنجاح.
-
-### Edge Case
-مدخلات غير متوقعة أو ناقصة.
-
-### Failure Case
-ماذا يحدث إذا فشلت خدمة أو API أو خطوة أساسية؟
-
-وثّقوا النتائج.
+- **Happy Path:** Verify that the workflow succeeds with valid inputs.
+- **Edge Case:** Test missing, unexpected, or unusual inputs.
+- **Failure Case:** Test what happens when an API, service, or critical workflow step fails.
+- **Error Handling:** Define how errors are detected and handled.
+- **Testing Evidence:** Document test results to demonstrate the system's behavior.
 
 ---
 
-# 7. Prepare for Deployment
+## 🚀 Deployment & Delivery
 
-الآن انتقلوا من:
+The project goes beyond building a workflow that works during development. It also considers how the solution will be operated and delivered.
 
-> **It works on my screen.**
-
-إلى:
-
-> **It can be delivered and operated.**
-
-حددوا:
-
-- أين سيعمل الحل؟
-- n8n Cloud أم Self-Hosted؟
-- إذا Self-Hosted، ما نوع الخادم المناسب؟
-- هل يحتاج Domain؟
-- هل يحتاج HTTPS؟
-- ما Credentials المطلوبة؟
-- ما البيانات التي يجب حفظها؟
-- كيف سيتم Backup؟
-- من المسؤول عن Maintenance؟
-
-لا يشترط أن تنشروا المشروع على VPS فعلي إذا لم يكن ذلك متاحًا للفريق.
-
-لكن يجب أن تكونوا قادرين على **شرح Deployment Plan حقيقي**.
+- **Hosting:** Decide whether to use n8n Cloud or a self-hosted deployment.
+- **Credentials & Security:** Protect API keys, passwords, and connection credentials.
+- **Data Management:** Define what data must be stored and how it will be managed.
+- **Backup & Maintenance:** Identify backup, maintenance, and update requirements.
+- **Setup Instructions:** Provide instructions that enable another person to configure and run the solution.
+- **Handover Documentation:** Explain the system's purpose, integrations, operating requirements, and testing process.
 
 ---
 
-# 8. Prepare the Handover
+## 📦 Project Deliverables
 
-جهزوا المشروع كما لو أنكم ستسلمونه لعميل.
-
-يجب أن يحتوي التسليم على:
-
-### Workflow
-الـ n8n Workflow النهائي.
-
-### Documentation
-شرح مختصر:
-
-- What does it do?
-- Who is it for?
-- How does it work?
-- What integrations does it use?
-- What credentials are required?
-
-### Setup Instructions
-ما الذي يحتاجه شخص آخر لتشغيل المشروع؟
-
-### Testing
-كيف يمكن للعميل التأكد أن النظام يعمل؟
-
-### Maintenance
-ما الذي يحتاج إلى متابعة أو تحديث مستقبلًا؟
-
----
-
-# 9. Final Demo
-
-كل فريق لديه **5–7 دقائق**.
-
-يجب أن يتضمن العرض:
-
-### 1. Problem — 1 min
-ما المشكلة؟
-
-### 2. Solution — 1 min
-ما الحل الذي صممتموه؟ ولماذا اخترتم هذه الـ Architecture؟
-
-### 3. Workflow — 1 min
-اشرحوا الـ Workflow والـ Data Flow.
-
-### 4. Live Demo — 2 min
-شغّلوا الحل أمامنا.
-
-### 5. Deployment & Delivery — 1–2 min
-كيف ستشغلونه وتسلّمونه لعميل حقيقي؟
-
----
-
-# 📦 Final Deliverables
-
-كل فريق يسلّم:
+The final project should include:
 
 - [ ] n8n Workflow
 - [ ] Problem & Solution Description
 - [ ] Architecture Diagram
 - [ ] Testing Evidence
-- [ ] Error Handling / Reliability notes
+- [ ] Error Handling & Reliability Notes
 - [ ] Deployment Plan
 - [ ] Handover Documentation
 - [ ] Final Demo
 
 ---
 
-# 🧠 Important Constraints
+## 📌 Key Takeaway
 
-### 1. Build Small, Think Big
+**A successful automation is not just a working workflow. It is a reliable, tested, documented, and deliverable solution.**
 
-لا تحاولوا بناء نظام كامل.
-
-ابنوا **MVP واضحًا يعمل**.
-
-### 2. Choose the Architecture Before the Tool
-
-لا تقولوا:
-
-> "We want to use an Agent."
-
-قولوا:
-
-> "We have this problem, therefore an Agent is/isn't appropriate."
-
-### 3. AI Is Not Mandatory
-
-ليس كل Automation يحتاج AI.
-
-إذا كان Workflow عاديًا هو الحل الأفضل، استخدموه.
-
-### 4. Real Value > Technical Complexity
-
-Workflow بسيط يحل مشكلة حقيقية أفضل من Workflow معقد لا يقدم قيمة.
-
-### 5. Security Matters
-
-لا تضعوا API Keys أو Passwords أو Credentials داخل الـ Workflow أو GitHub.
+Success means solving a real problem with a solution that can be tested, operated, maintained, and handed over to someone else.
 
 ---
 
-# 🏆 Evaluation Rubric
+## 📈 Capability Progress
 
-| Criteria | Weight |
-|---|---:|
-| Problem Understanding | 15% |
-| Solution Design & Architecture | 20% |
-| n8n Implementation | 20% |
-| AI / Automation Decision | 10% |
-| Reliability & Testing | 10% |
-| Deployment & Handover Plan | 10% |
-| Demo & Explanation | 10% |
-| Documentation | 5% |
-| **Total** | **100%** |
+- Understand real-world problems and identify the value of a solution.
+- Analyze processes and design an appropriate architecture.
+- Build AI automation workflows using n8n.
+- Make informed decisions about when to use AI, Agents, or RAG.
+- Test systems and handle unexpected scenarios.
+- Document results and prepare deployment and handover plans.
+- Explain the solution and demonstrate its value through a practical demo.
 
 ---
 
-# 🎯 The Final Question
+## 🔗 Related Projects
 
-قبل أن تعتبروا المشروع ناجحًا، أجيبوا عن هذه الأسئلة:
-
-> **What problem did we solve?**
-
-> **Why is our architecture appropriate?**
-
-> **Why did we use AI—or why didn't we?**
-
-> **What happens when something goes wrong?**
-
-> **Where would we deploy it?**
-
-> **How would we hand it over to a real client?**
-
-> **What value does this solution create?**
 
 ---
 
-# 🚀 Final Goal
-
-هذا المشروع ليس اختبارًا لمن يستطيع بناء أكبر Workflow.
-
-إنه اختبار لقدرتكم على التفكير كـ:
-
-## **AI Automation Solution Builders**
-
-**Understand → Design → Build → Test → Deploy → Deliver**
-
-> **Don't just build an automation.  
-> Build a solution that someone can actually use.**
+**Final Goal:** Understand → Design → Build → Test → Deploy → Deliver.
