@@ -46,7 +46,6 @@ A team project focused on selecting a real-world problem and building a practica
 - **Tools:** n8n and any additional tools or services required by the solution.
 - **Deliverables:** n8n Workflow, Problem & Solution Description, Architecture Diagram, Testing Evidence, Reliability Notes, Deployment Plan, and Handover Documentation.
 
-[Explore the Project](./08-build-deploy-deliver/final-team-challenge)
 
 ---
 
